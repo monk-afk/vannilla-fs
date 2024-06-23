@@ -41,7 +41,7 @@ local function generate(layers)
         output_nodes = {}, 
         output = 0, 
         weights = {}, 
-        bias = math.random(-100, 100) / 100
+        bias = math.random() * 2 - 1
       }
       
       if layer_index > 1 then
@@ -49,7 +49,7 @@ local function generate(layers)
           local node2 = brain.network[node_index2]
           table.insert(node2.output_nodes, node_index)
           table.insert(node.input_nodes, node_index2)
-          table.insert(node.weights, math.random(-100, 100) / 100)
+          table.insert(node.weights, math.random() * 2 - 1)
         end
       end
       
@@ -172,9 +172,9 @@ local hidden_layers, output_layer = 6, 2
 local epochs, learn_rate = 1000, 0.0085
 local brain = generate({input_nodes, hidden_layers, output_layer})
 
-dofile("gnuplot.lua")
 
 if use_gnuplot then
+  dofile("gnuplot.lua")
   record_datapoints(train(brain, token_data, epochs, learn_rate, batch_size),
       epochs, learn_rate, batch_size, hidden_layers, output_layer)
 else
